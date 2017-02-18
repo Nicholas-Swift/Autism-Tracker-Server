@@ -1,23 +1,23 @@
 
 import webapp2
+import database
 
 class Event:
 
-    def __init__(self):
+    def __init__(self, mood, stress_level, physical_activity_level, self_harm_level, trigger, resolution, additional_notes, photo_url, time):
         """Initialize this event with the given variables"""
 
-        self.id = 7
+        self.id = len(database.events)
         
-        self.mood = "Happy"
-        self.stress_level = 5
+        self.mood = mood
+        self.stress_level = stress_level
 
-        self.physical_activity_level = 8
-        self.self_harm_level = 9
+        self.physical_activity_level = physical_activity_level
+        self.self_harm_level = self_harm_level
 
-        self.trigger = "the trigger was something"
-        self.resolution = "Resolved by this solution"
-        self.additional_notes = "Here are some additional notes about the situation"
+        self.trigger = trigger
+        self.resolution = resolution
+        self.additional_notes = additional_notes
 
-        self.photo_url = "url_to_photo"
-        self.time = "Friday"
-        
+        self.photo_url = photo_url
+        self.time = time
