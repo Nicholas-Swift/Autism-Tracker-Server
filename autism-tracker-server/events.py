@@ -16,10 +16,29 @@
 #
 import webapp2
 
+
+# Routes
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Welcome to the api. Please do /events and /events/<id>')
 
-class GetAllEventsHandler(webapp2.RequestHandler):
+class EventHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Oh shit get event please')
+
+    def post(self):
+        self.response.write('POST server pls')
+
+class ShowEventHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('Oh shit waddup')
+
+# Helper Functions
+def getAllEvents():
+    print("WOW")
+
+def getEvent(id):
+    print("Hello")
+
+def createEvent(stuff):
+    print("WOWOWOW")
