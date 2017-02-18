@@ -1,18 +1,17 @@
 
 import webapp2
-from events import MainHandler
+
+# Import Events
 from events import EventHandler
 from events import ShowEventHandler
 
-# Router
+# MARK: - Router
 routes = [
-    # Main
-    webapp2.Route('/', handler=MainHandler),
 
     # Events
-    webapp2.Route('/events', EventHandler),
-    webapp2.Route('/events/<event_id>', ShowEventHandler)
+    webapp2.Route('/events', handler=EventHandler),
+    webapp2.Route('/events/<event_id>', handler=ShowEventHandler)
 ]
 
-# Set up application
+# MARK: - Set up app
 app = webapp2.WSGIApplication(routes, debug=True)

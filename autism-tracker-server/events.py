@@ -4,83 +4,58 @@ import json
 from event import Event
 
 # Database
-events = []
+events_database = []
 
-# Routes
-class MainHandler(webapp2.RequestHandler): # /
-    def get(self):
-        self.response.write('Welcome to the api. Please do /events and /events/<id>')
-
+# MARK: - Routes
 class EventHandler(webapp2.RequestHandler): # /events
     def get(self):
-
-        # Get all events
-        all_events = list(map(lambda x: x.__dict__, get_all_events()))
-
-        # Turn to json
-        return_json = json.dumps(all_events)
-
-        # Set up headers
         self.response.headers['Content-Type'] = 'application/json'
-
-        # Return response
-        self.response.write(return_json)
+        self.response.write(get_all_events())
 
     def post(self):
-        """Post to server to create a new event"""
-
-        # Create new event
-        new_event = create_event("nil")
-
-        # Turn to json
-        return_json = json.dumps(new_event.__dict__)
-
-        # Set up headers
         self.response.headers['Content-Type'] = 'application/json'
-
-        # Return response
-        self.response.write(return_json)
+        self.response.write(create_event())
 
 class ShowEventHandler(webapp2.RequestHandler): # /events/(event_id)
     def get(self, event_id):
-
-        # Find the event
-        return_event = get_event(event_id)
-
-        # Error handling
-        if return_event is None:
-            self.response.write("Fuck dude doesn't work")
-            return
-
-        # Turn to json
-        return_json = json.dumps(return_event.__dict__)
-
-        # Set up headers
         self.response.headers['Content-Type'] = 'application/json'
+        self.response.write(get_event(event_id))
 
-        # Return response
-        self.response.write(return_json)
 
-# Helper Functions
+# MARK: - Get All Events
 def get_all_events():
     
-    # Return all events
-    return events
+    # Turn events to list of json
+    all_events = list(map(lambda x: x.__dict__, events_database))
 
+    # Return json version
+    return json.dumps(all_events)
+
+# MARK: - Get Event
 def get_event(event_id):
     
-    # Find correct event
-    for i in events:
-        if events.id == event_id:
-            return i
+    # Make sure event_id is an int
+    event_id = int(event_id)
 
-def create_event(stuff):
+    # Find correct event
+    for e in events_database:
+        if e.id == event_id:
+
+            # Return json version
+            return json.dumps(e.__dict__)
+
+    # Error if event is None
+    return json.dumps({'Error': 'Did not find event'})
+
+# MARK: - Create Event
+def create_event():
     
     # Create new event
     new_event = Event()
 
     # Append to database
-    events.append(new_event)
+    events_database.append(new_event)
 
-    # Return event
-    return new_event
+    # Return json version
+    return json.dumps(new_event.__dict__)
+
