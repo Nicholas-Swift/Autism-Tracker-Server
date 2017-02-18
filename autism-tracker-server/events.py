@@ -1,44 +1,86 @@
-#!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-import webapp2
 
+import webapp2
+import json
+from event import Event
+
+# Database
+events = []
 
 # Routes
-class MainHandler(webapp2.RequestHandler):
+class MainHandler(webapp2.RequestHandler): # /
     def get(self):
         self.response.write('Welcome to the api. Please do /events and /events/<id>')
 
-class EventHandler(webapp2.RequestHandler):
+class EventHandler(webapp2.RequestHandler): # /events
     def get(self):
-        self.response.write('Oh shit get event please')
+
+        # Get all events
+        all_events = list(map(lambda x: x.__dict__, get_all_events()))
+
+        # Turn to json
+        return_json = json.dumps(all_events)
+
+        # Set up headers
+        self.response.headers['Content-Type'] = 'application/json'
+
+        # Return response
+        self.response.write(return_json)
 
     def post(self):
-        self.response.write('POST server pls')
+        """Post to server to create a new event"""
 
-class ShowEventHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Oh shit waddup')
+        # Create new event
+        new_event = create_event("nil")
+
+        # Turn to json
+        return_json = json.dumps(new_event.__dict__)
+
+        # Set up headers
+        self.response.headers['Content-Type'] = 'application/json'
+
+        # Return response
+        self.response.write(return_json)
+
+class ShowEventHandler(webapp2.RequestHandler): # /events/(event_id)
+    def get(self, event_id):
+
+        # Find the event
+        return_event = get_event(event_id)
+
+        # Error handling
+        if return_event is None:
+            self.response.write("Fuck dude doesn't work")
+            return
+
+        # Turn to json
+        return_json = json.dumps(return_event.__dict__)
+
+        # Set up headers
+        self.response.headers['Content-Type'] = 'application/json'
+
+        # Return response
+        self.response.write(return_json)
 
 # Helper Functions
-def getAllEvents():
-    print("WOW")
+def get_all_events():
+    
+    # Return all events
+    return events
 
-def getEvent(id):
-    print("Hello")
+def get_event(event_id):
+    
+    # Find correct event
+    for i in events:
+        if events.id == event_id:
+            return i
 
-def createEvent(stuff):
-    print("WOWOWOW")
+def create_event(stuff):
+    
+    # Create new event
+    new_event = Event()
+
+    # Append to database
+    events.append(new_event)
+
+    # Return event
+    return new_event

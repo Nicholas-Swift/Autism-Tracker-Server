@@ -6,9 +6,12 @@ from events import ShowEventHandler
 
 # Router
 routes = [
-    ('/', MainHandler),
-    ('/events', EventHandler),
-    ('/events/<id>', ShowEventHandler)
+    # Main
+    webapp2.Route('/', handler=MainHandler),
+
+    # Events
+    webapp2.Route('/events', EventHandler),
+    webapp2.Route('/events/<event_id>', ShowEventHandler)
 ]
 
 # Set up application
