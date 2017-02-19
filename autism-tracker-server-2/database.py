@@ -4,4 +4,5 @@ import json
 
 # List of events
 events = []
+webhookdata = []
 

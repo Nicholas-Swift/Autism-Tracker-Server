@@ -23,13 +23,6 @@ class ShowEventHandler(webapp2.RequestHandler): # /events/(event_id)
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(get_event(event_id))
 
-# MARK: Active Events
-
-class ActiveEventHandler(webapp2.RequestHandler): # /active/events
-    def post(self):
-        print(self.request.POST)
-        self.response.write("")
-
 # MARK: - Get All Events
 def get_all_events():
 
