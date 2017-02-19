@@ -2,6 +2,7 @@ import time
 import webapp2
 import json
 from event import Event
+import database2
 import database
 
 # MARK: - Routes
@@ -12,7 +13,7 @@ class EventHandler(webapp2.RequestHandler): # /events
 
     def post(self):
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.write(create_event(self.request.POST))
+        self.response.write(create_event(self.request.params))
 
     def delete(self):
         database.events = []
@@ -38,6 +39,10 @@ def get_event(event_id):
 
     # Make sure event_id is an int
     event_id = int(event_id)
+
+    # TESTING TESTING TESTING PLEASE
+    client = database2.create_client('AIzaSyDa_7NPxtvNXM2Laz0j3cQ')
+    database2.add_task(client)
 
     # Find correct event
     for e in database.events:
