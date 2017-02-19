@@ -41,8 +41,8 @@ def get_event(event_id):
     event_id = int(event_id)
 
     # TESTING TESTING TESTING PLEASE
-    client = database2.create_client('AIzaSyDa_7NPxtvNXM2Laz0j3cQ')
-    database2.add_task(client)
+    # client = database2.create_client('AIzaSyDa_7NPxtvNXM2Laz0j3cQ')
+    # database2.add_task(client)
 
     # Find correct event
     for e in database.events:
