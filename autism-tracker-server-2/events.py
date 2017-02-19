@@ -2,7 +2,6 @@ import time
 import webapp2
 import json
 from event import Event
-import database2
 import database
 
 # MARK: - Routes
