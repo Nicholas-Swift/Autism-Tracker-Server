@@ -12,7 +12,20 @@ class EventHandler(webapp2.RequestHandler): # /events
 
     def post(self):
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.write(create_event(self.request.params))
+
+        print("POST")
+        print(self.request.POST)
+        print("\n\n\n")
+
+        print("GET")
+        print(self.request.GET)
+        print("\n\n\n")
+
+        print("PARAMS")
+        print(self.request.params)
+        print("\n\n\n")
+
+        self.response.write(create_event(self.request.POST))
 
     def delete(self):
         database.events = []
@@ -57,10 +70,46 @@ def get_event(event_id):
 # MARK: - Create Event
 def create_event(parameters):
 
-    print(parameters)
+    # new_params = {}
+    # for key, value in parameters.items():
+    #     new_params[key] = value
+    #     print('\n\n\n\n')
+    #     print(key)
+    #     print(type(key))
+
+    #     print(value)
+    #     print(type(value))
+    # print('new_params')
+    # print(new_params)
+
+    new_list = []
+    for i in enumerate(parameters.items()):
+        for j in i:
+            print(j)
+            new_list.append(j)
+
+    new_list[1] = new_list[1][0] + '"}'
+    new_list[3] = '{' + new_list[3][1][5:]
+
+    print("WOWOWOOWW")
+
+    wow1 = new_list[1].encode('ascii','ignore')
+    print(wow1)
+    wow1dict = json.loads(wow1)
+    print(wow1dict)
+    print("wow1dict succeeded")
+
+    wow2 = new_list[3].encode('ascii','ignore')
+    print(wow2)
+    wow2dict = json.loads(wow2)
+    print(wow2dict)
+    print("wow2dict succeeded")
+
+    # Merge the dictionaries
+    wow1dict.update(wow2dict)
 
     # Create new event
-    new_event = Event(parameters['mood'], int(parameters['stress_level']), int(parameters['physical_activity_level']), int(parameters['self_harm_level']), parameters['trigger'], parameters['resolution'], parameters['additional_notes'], parameters['photo_url'], int(time.time()))
+    new_event = Event(wow1dict['mood'], wow1dict['stress_level'], wow1dict['physical_activity_level'], wow1dict['self_harm_level'], wow1dict['trigger'], wow1dict['resolution'], wow1dict['additional_notes'], wow1dict['photo_url'], int(time.time()))
 
     # Append to database
     database.events.append(new_event)
