@@ -11,6 +11,7 @@ routes = [
     # Events
     webapp2.Route('/events', handler=EventHandler),
     webapp2.Route('/events/<event_id>', handler=ShowEventHandler)
+    webapp2.Route('active/events', handler=ActiveEventHandler)
 ]
 
 # MARK: - Set up app
