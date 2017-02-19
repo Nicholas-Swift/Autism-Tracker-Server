@@ -27,7 +27,8 @@ class ShowEventHandler(webapp2.RequestHandler): # /events/(event_id)
 
 class ActiveEventHandler(webapp2.RequestHandler): # /active/events
     def post(self):
-        print(self.requst.POST)
+        with open('neura_text.txt', 'a') as neuratext:
+            print(json.dumps(self.request.POST), file=neuratext)
         self.response.write("")
 
 # MARK: - Get All Events
